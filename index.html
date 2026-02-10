@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anusha S K | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset & Fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #0b0f2a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas Background */
+        #effectsCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            text-shadow: 0 0 15px #ffffff;
+        }
+
+        .headline-tagline {
+            color: #38bdf8;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            text-shadow: 0 0 5px #38bdf8;
+            animation: taglineGlow 2.5s infinite alternate;
+        }
+
+        @keyframes taglineGlow {
+            0% { text-shadow: 0 0 3px #38bdf8, 0 0 5px #0ff; }
+            50% { text-shadow: 0 0 7px #38bdf8, 0 0 15px #0ff; }
+            100% { text-shadow: 0 0 3px #38bdf8, 0 0 5px #0ff; }
+        }
+
+        .subtitle {
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            color: #94a3b8;
+        }
+
+        .nav {
+            margin-top: 1rem;
+        }
+
+        .nav a {
+            color: #38bdf8;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* UPDATED SQUARE PROFILE */
+        .profile-pic-wrapper {
+            width: 200px;
+            height: 200px;
+            border-radius: 16px; /* square with smooth corners */
+            border: 4px solid #38bdf8;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 0 20px rgba(56,189,248,0.6);
+        }
+
+        .profile-pic-wrapper:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 30px #38bdf8, 0 0 60px #0ff;
+        }
+
+        .profile-pic-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Sections */
+        .section {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .section.light {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin: 1rem auto;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .section h2 {
+            color: #38bdf8;
+            margin-bottom: 1rem;
+        }
+
+        .section h3 {
+            color: #94a3b8;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* Grid & Cards */
+        .grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: rgba(56, 189, 248, 0.05);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            width: 220px;
+            border-radius: 15px;
+            font-weight: 500;
+            border: 2px solid rgba(56, 189, 248, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(56, 189, 248, 0.2);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.8),
+                        0 0 50px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Time & Date */
+        .time-date {
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #38bdf8;
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="effectsCanvas"></canvas>
+
+<main class="main-content">
+
+    <header class="header">
+        <h1>Anusha S K</h1>
+        <p class="headline-tagline">Aspiring to be an Entrepreneur</p>
+        <p class="subtitle">Computer Science & Business Systems Student</p>
+        <nav class="nav">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- UPDATED PROFILE PICTURE -->
+    <section class="profile-section">
+        <div class="profile-pic-wrapper">
+            <img src="profile.jpg" alt="Profile Picture">
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <p>
+            I am Anusha S K, a motivated undergraduate student specializing in Computer Science
+            and Business Systems. I am passionate about building user-friendly applications
+            and applying data-driven solutions for business challenges.
+        </p>
+        <div class="time-date">
+            <span id="currentTime"></span> | <span id="currentDate"></span>
+        </div>
+    </section>
+
+    <section id="skills" class="section light">
+        <h2>Skills</h2>
+        <h3>Technical Skills</h3>
+        <div class="grid">
+            <div class="card">C Programming</div>
+            <div class="card">Python</div>
+            <div class="card">SQL & Databases</div>
+            <div class="card">R Programming</div>
+            <div class="card">Java</div>
+        </div>
+
+        <h3>Professional Skills</h3>
+        <div class="grid">
+            <div class="card">Leadership</div>
+            <div class="card">Team Collaboration</div>
+            <div class="card">Problem Solving</div>
+            <div class="card">Time Management</div>
+            <div class="card">Communication</div>
+        </div>
+    </section>
+
+    <section id="certifications" class="section">
+        <h2>Certifications</h2>
+        <div class="grid">
+            <div class="card">Coursera: Operational Research</div>
+            <div class="card">Hack Fusion 1.0</div>
+            <div class="card">Poster Presentation – Technical Event</div>
+        </div>
+    </section>
+
+    <section id="projects" class="section light">
+        <h2>Projects</h2>
+        <div class="grid">
+            <div class="card">Inventory Management System<br><small>Medical Shop</small></div>
+            <div class="card">Bank Account Management System</div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>Email: anushaskanu2410@gmail.com</p>
+        <p>Phone: 7795194896</p>
+        <p>GitHub: github.com/anusha24-shaiva</p>
+        <p>LinkedIn: linkedin.com/in/anusha-sk</p>
+    </section>
+
+    <footer class="footer">
+        © 2026 Anusha S K
+    </footer>
+
+</main>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        document.getElementById("currentTime").textContent = now.toLocaleTimeString();
+        document.getElementById("currentDate").textContent = now.toLocaleDateString();
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    const canvas = document.getElementById("effectsCanvas");
+    const ctx = canvas.getContext("2d");
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    for (let i = 0; i < 150; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5),
+            dy: (Math.random() - 0.5)
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        for (let p of particles) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "#38bdf8";
+            ctx.fill();
+
+            p.x += p.dx;
+            p.y += p.dy;
+
+            if (p.x < 0 || p.x > w) p.dx *= -1;
+            if (p.y < 0 || p.y > h) p.dy *= -1;
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+</script>
+
+</body>
+</html>
